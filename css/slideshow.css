@@ -30,6 +30,19 @@ html, body, .scs-background, .scs-slide {
         opacity: 1;
     }
 
+.scs-button {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+}
+.scs-prev {
+    left: 0;
+}
+.scs-next {
+    right: 0;
+}
+
 img, .content {
     display: none;
 }
