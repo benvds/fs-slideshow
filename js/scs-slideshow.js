@@ -4,10 +4,13 @@
 
     var selector = '.scs-slideshow',
         backgroundSelector = '.scs-background',
+        contentSelector = '.content',
+
         Slideshow = function (element) {
             this.$element = $(element);
             this.$background = $(backgroundSelector);
-            this.$slides = $();
+            this.$backgrounds = $();
+            this.$contents = this.$element.find('> li > .content');
 
             this.addSlides();
             this.addButtons();
@@ -21,7 +24,7 @@
                 slide = $('<div class="scs-slide"></div>').
                     css('backgroundImage', 'url(' + src + ')').
                     appendTo(that.$background);
-                that.$slides = that.$slides.add(slide);
+                that.$backgrounds = that.$backgrounds.add(slide);
             });
         },
 
@@ -35,13 +38,13 @@
         },
 
         'isLastSlide': function (index) {
-            return this.$slides.length === index+ 1;
+            return this.$backgrounds.length === index+ 1;
         },
 
         'showPrev': function () {
             var curIndex = this.$background.find('.active').index(),
                 nextIndex = curIndex === 0 ?
-                    this.$slides.length - 1 : curIndex - 1;
+                    this.$backgrounds.length - 1 : curIndex - 1;
 
             this.setActive(nextIndex);
         },
@@ -54,8 +57,10 @@
         },
 
         'setActive': function (index) {
-            this.$slides.removeClass('active');
-            this.$slides.eq(index).addClass('active');
+            this.$backgrounds.removeClass('active');
+            this.$contents.removeClass('active');
+            this.$backgrounds.eq(index).addClass('active');
+            this.$contents.eq(index).addClass('active');
         }
     };
 

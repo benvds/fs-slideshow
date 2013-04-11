@@ -8,6 +8,12 @@ html, body, .scs-background, .scs-slide {
 .scs-slideshow {
     list-style: none;
 }
+    .scs-slideshow .background, .scs-slideshow .content {
+        display: none;
+    }
+    .scs-slideshow .active {
+        display: block;
+    }
 
 .scs-background {
     position: fixed;
@@ -41,8 +47,4 @@ html, body, .scs-background, .scs-slide {
 }
 .scs-next {
     right: 0;
-}
-
-img, .content {
-    display: none;
 }
