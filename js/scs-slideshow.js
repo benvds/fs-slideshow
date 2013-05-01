@@ -1,23 +1,35 @@
+/* TODO documentation
+ * only newer browsers, css3, background-size: cover
+ *
+ */
 (function() {
 
     'use strict';
 
-    var selector = '.scs-slideshow',
-        backgroundSelector = '.scs-background',
+    var sourceSelector = '.scs-slideshow',
         contentSelector = '.content',
+        backgroundClass = 'scs-background',
+        activeClass = 'active',
 
+        // constructor
         Slideshow = function (element) {
+            // source element for the slideshow
             this.$element = $(element);
-            this.$background = $(backgroundSelector);
+            // background element holding the slides
+            this.$background = $('<div class="' + backgroundClass + '"></div>').
+                appendTo('body');
+            // cache backgrounds for manipulation
             this.$backgrounds = $();
+            // cache content for manipulation
             this.$contents = this.$element.find('> li > .content');
 
-            this.addSlides();
-            this.addButtons();
+            this.initSlides();
+            this.initButtons();
         };
 
     Slideshow.prototype = {
-        'addSlides': function () {
+        // create slides, add to background
+        'initSlides': function () {
             var src, slide, that = this;
             this.$element.find('img').each(function () {
                 src = $(this).attr('src');
@@ -28,39 +40,52 @@
             });
         },
 
-        // move buttons inside the $background so aligns to middle
-        'addButtons': function (index) {
-            var $next = $('.scs-next'),
-                $prev = $('.scs-prev');
-
-            $next.on('click', $.proxy(this.showNext, this));
-            $prev.on('click', $.proxy(this.showPrev, this));
+        // handle button clicks
+        'initButtons': function (index) {
+            $('.scs-prev').on('click', $.proxy(this.showPrev, this));
+            $('.scs-next').on('click', $.proxy(this.showNext, this));
         },
 
-        'isLastSlide': function (index) {
-            return this.$backgrounds.length === index+ 1;
+        // index of the current active slide
+        'curIndex': function() {
+            return this.$background.find('.' + activeClass).index();
+        },
+
+        // equals given index that of the last slide
+        'isFirstSlideIndex': function (index) {
+            return index === 0;
+        },
+
+        // equals given index that of the last slide
+        'isLastSlideIndex': function (index) {
+            return this.$backgrounds.length === index + 1;
         },
 
         'showPrev': function () {
-            var curIndex = this.$background.find('.active').index(),
-                nextIndex = curIndex === 0 ?
+                // cache current index
+            var curIndex = this.curIndex(),
+                // use last index if current index is the first
+                nextIndex = this.isFirstSlideIndex(curIndex) ?
                     this.$backgrounds.length - 1 : curIndex - 1;
 
             this.setActive(nextIndex);
         },
 
         'showNext': function () {
-            var curIndex = this.$background.find('.active').index(),
-                nextIndex = this.isLastSlide(curIndex) ? 0 : curIndex + 1;
+                // cache current index
+            var curIndex = this.curIndex(),
+                // use first index if current index is the last
+                nextIndex = this.isLastSlideIndex(curIndex) ? 0 : curIndex + 1;
 
             this.setActive(nextIndex);
         },
 
         'setActive': function (index) {
-            this.$backgrounds.removeClass('active');
-            this.$contents.removeClass('active');
-            this.$backgrounds.eq(index).addClass('active');
-            this.$contents.eq(index).addClass('active');
+            // TODO explain why not caching current active
+            this.$backgrounds.removeClass(activeClass);
+            this.$contents.removeClass(activeClass);
+            this.$backgrounds.eq(index).addClass(activeClass);
+            this.$contents.eq(index).addClass(activeClass);
         }
     };
 
@@ -82,7 +107,6 @@
 
     // document load
     $(function() {
-        console.timeStamp('DOCUMENT LOADED!');
-        $(selector).scsSlideshow();
+        $(sourceSelector).scsSlideshow();
     });
 })();
