@@ -8,7 +8,7 @@ html, body, .fs-background, .fs-slide {
 .fs-slideshow {
     list-style: none;
 }
-    /* TODO use class for slide in slideshow for better performance */
+    /* OPTIONAL use class for slide in slideshow for better performance */
     /* TODO research if can use visibility hidden instead of forcing block */
     .fs-bg, .fs-slideshow > li {
         display: none;

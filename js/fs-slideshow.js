@@ -1,15 +1,3 @@
-/* TODO documentation
- * a minimal full screen slideshow jquery plugin
- * project requirements & expectations
- * minimal implementation for use in other projects
- * only next/prev
- * only newer browsers
- * one slideshow per page
- * css3 transitions
- * jquery, minifications, tests, 1 slideshow, setup for multiple
- * only newer browsers, css3, background-size: cover
- *
- */
 (function() {
 
     'use strict';
@@ -38,18 +26,24 @@
         };
 
     FsSlideshow.prototype = {
-        // create slides, add to    background
+        // create slides, add to background
         'initSlides': function () {
             var $this, $backgroundImg, src, slide, that = this;
+
             this.$contents.each(function () {
                 $this = $(this);
+
+                // get the background image source
                 $backgroundImg =
                     $this.children('.' + backgroundImageClass + ':first');
                 src = $backgroundImg.attr('src');
+
+                // add slide and set the background image
                 slide = $('<div />').
                     addClass(slideClass).
                     css('backgroundImage', 'url(' + src + ')').
                     appendTo(that.$background);
+
                 that.$backgrounds = that.$backgrounds.add(slide);
             });
         },
@@ -114,13 +108,9 @@
                            (data = new FsSlideshow(this)));
             }
 
-            // TODO show example using set active through jquery
             data.setActive(typeof index == 'number' ? index : 0);
         });
     };
-
-    // TODO research why this is done
-    $.fn.fsSlideshow.Constructor = FsSlideshow;
 
     // document load
     $(function() {
