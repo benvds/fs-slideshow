@@ -14,9 +14,10 @@ A minimal full screen slideshow jquery plugin intended for use in bigger project
 
 # usage
 
- 1. require jquery & fs-slideshow script
- 2. add markup for the content:
+ * require jquery & fs-slideshow script
+ * add markup for the content:
 
+```html
     <ol class="fs-slideshow">
         <li>
             <img class="fs-bg" alt="Cairn" src="img/Cairn_by_Sylvain_Naudin.jpg">
@@ -31,11 +32,15 @@ A minimal full screen slideshow jquery plugin intended for use in bigger project
             This is the third slide.
         </li>
     </ol>
+```
 
- 3. add markup for the buttons:
+ * add markup for the buttons:
+
+```html
     <div class="fs-prev">
         <a href="#">BACK</a>
     </div>
     <div class="fs-next">
         <a href="#">NEXT</a>
     </div>
+```
