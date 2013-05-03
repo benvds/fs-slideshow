@@ -1,50 +1,53 @@
-html, body, .scs-background, .scs-slide {
+html, body, .fs-background, .fs-slide {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
-.scs-slideshow {
+.fs-slideshow {
     list-style: none;
 }
-    .scs-slideshow .background, .scs-slideshow .content {
+    /* TODO use class for slide in slideshow for better performance */
+    /* TODO research if can use visibility hidden instead of forcing block */
+    .fs-bg, .fs-slideshow > li {
         display: none;
     }
-    .scs-slideshow .active {
+    .fs-slideshow .fs-active {
         display: block;
     }
 
-.scs-background {
+.fs-background {
     position: fixed;
     top: 0;
     left: 0;
     z-index: -1;
 }
 
-.scs-slide {
+.fs-slide {
     position: absolute;
     top: 0;
     left: 0;
     background-size: cover;
+    /* TODO add other prefixes */
     -webkit-transition: all 2s ease-out;
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden;
     opacity: 0;
 }
-    .scs-slide.active {
+    .fs-slide.fs-active {
         opacity: 1;
     }
 
-.scs-button {
+.fs-prev, .fs-next {
     display: block;
     position: absolute;
     z-index: 1;
     top: 50%;
 }
-.scs-prev {
+.fs-prev {
     left: 0;
 }
-.scs-next {
+.fs-next {
     right: 0;
 }

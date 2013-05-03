@@ -1,4 +1,12 @@
 /* TODO documentation
+ * a minimal full screen slideshow jquery plugin
+ * project requirements & expectations
+ * minimal implementation for use in other projects
+ * only next/prev
+ * only newer browsers
+ * one slideshow per page
+ * css3 transitions
+ * jquery, minifications, tests, 1 slideshow, setup for multiple
  * only newer browsers, css3, background-size: cover
  *
  */
@@ -6,34 +14,40 @@
 
     'use strict';
 
-    var sourceSelector = '.scs-slideshow',
-        contentSelector = '.content',
-        backgroundClass = 'scs-background',
-        activeClass = 'active',
+    var sourceSelector = '.fs-slideshow',
+        backgroundImageClass = 'fs-bg',
+        backgroundClass = 'fs-background',
+        slideClass = 'fs-slide',
+        activeClass = 'fs-active',
 
         // constructor
-        Slideshow = function (element) {
+        FsSlideshow = function (element) {
             // source element for the slideshow
             this.$element = $(element);
             // background element holding the slides
-            this.$background = $('<div class="' + backgroundClass + '"></div>').
+            this.$background = $('<div />').
+                addClass(backgroundClass).
                 appendTo('body');
             // cache backgrounds for manipulation
             this.$backgrounds = $();
             // cache content for manipulation
-            this.$contents = this.$element.find('> li > .content');
+            this.$contents = this.$element.children();
 
             this.initSlides();
             this.initButtons();
         };
 
-    Slideshow.prototype = {
-        // create slides, add to background
+    FsSlideshow.prototype = {
+        // create slides, add to    background
         'initSlides': function () {
-            var src, slide, that = this;
-            this.$element.find('img').each(function () {
-                src = $(this).attr('src');
-                slide = $('<div class="scs-slide"></div>').
+            var $this, $backgroundImg, src, slide, that = this;
+            this.$contents.each(function () {
+                $this = $(this);
+                $backgroundImg =
+                    $this.children('.' + backgroundImageClass + ':first');
+                src = $backgroundImg.attr('src');
+                slide = $('<div />').
+                    addClass(slideClass).
                     css('backgroundImage', 'url(' + src + ')').
                     appendTo(that.$background);
                 that.$backgrounds = that.$backgrounds.add(slide);
@@ -42,8 +56,8 @@
 
         // handle button clicks
         'initButtons': function (index) {
-            $('.scs-prev').on('click', $.proxy(this.showPrev, this));
-            $('.scs-next').on('click', $.proxy(this.showNext, this));
+            $('.fs-prev').on('click', $.proxy(this.showPrev, this));
+            $('.fs-next').on('click', $.proxy(this.showNext, this));
         },
 
         // index of the current active slide
@@ -89,24 +103,28 @@
         }
     };
 
-    $.fn.scsSlideshow = function (index) {
+    $.fn.fsSlideshow = function (index) {
+        // TODO test scenario with multiple slideshows, or for now just one
         return this.each(function () {
             var $this = $(this),
-                data = $this.data('scsSlideshow');
+                data = $this.data('fsSlideshow');
 
             if (!data) {
-                $this.data('scsSlideshow',
-                           (data = new Slideshow(this)));
+                $this.data('fsSlideshow',
+                           (data = new FsSlideshow(this)));
             }
 
+            // TODO show example using set active through jquery
             data.setActive(typeof index == 'number' ? index : 0);
         });
     };
 
-    $.fn.scsSlideshow.Constructor = Slideshow;
+    // TODO research why this is done
+    $.fn.fsSlideshow.Constructor = FsSlideshow;
 
     // document load
     $(function() {
-        $(sourceSelector).scsSlideshow();
+        // init slide show
+        $(sourceSelector).fsSlideshow();
     });
 })();
