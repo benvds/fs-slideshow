@@ -89,7 +89,6 @@
         },
 
         'setActive': function (index) {
-            // TODO explain why not caching current active
             this.$backgrounds.removeClass(activeClass);
             this.$contents.removeClass(activeClass);
             this.$backgrounds.eq(index).addClass(activeClass);
@@ -98,7 +97,6 @@
     };
 
     $.fn.fsSlideshow = function (index) {
-        // TODO test scenario with multiple slideshows, or for now just one
         return this.each(function () {
             var $this = $(this),
                 data = $this.data('fsSlideshow');

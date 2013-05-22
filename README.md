@@ -1,6 +1,9 @@
 # FS Slideshow
 
-A minimal full screen slideshow jquery plugin intended for use in bigger projects.
+A minimal full screen slideshow jquery plugin intended for use in other
+projects as a boilerplate or just as is.
+
+characteristics:
 
  * easy to adjust
  * supports only newer browsers

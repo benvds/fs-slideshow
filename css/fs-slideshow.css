@@ -9,7 +9,6 @@ html, body, .fs-background, .fs-slide {
     list-style: none;
 }
     /* OPTIONAL use class for slide in slideshow for better performance */
-    /* TODO research if can use visibility hidden instead of forcing block */
     .fs-bg, .fs-slideshow > li {
         display: none;
     }
@@ -29,10 +28,10 @@ html, body, .fs-background, .fs-slide {
     top: 0;
     left: 0;
     background-size: cover;
-    /* TODO add other prefixes */
     -webkit-transition: all 2s ease-out;
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden;
+    transition: all 2s ease-out;
     opacity: 0;
 }
     .fs-slide.fs-active {
