@@ -11,6 +11,11 @@ characteristics:
  * only one slideshow per page
  * manually trigger sliding
 
+todo:
+
+ * start at index
+ * shallow controls: next, prev, play, pause
+
 # requirements
 
   * jquery
@@ -37,7 +42,7 @@ characteristics:
     </ol>
 ```
 
- * add markup for the buttons:
+ * add markup for the buttons (optional):
 
 ```html
     <div class="fs-prev">
@@ -46,4 +51,12 @@ characteristics:
     <div class="fs-next">
         <a href="#">NEXT</a>
     </div>
+```
+
+ * initialize plugin
+
+```javascript
+    $(function() {
+        $('.fs-slideshow).fsSlideshow();
+    });
 ```
