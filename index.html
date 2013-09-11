@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>FS Slideshow</title>
-		<link rel="stylesheet" href="css/fs-slideshow.css">
-	</head>
-	<body>
-		<ol class="fs-slideshow">
-			<li>
-				<img class="fs-bg" alt="Cairn" src="img/Cairn_by_Sylvain_Naudin.jpg">
-				This is the first slide.
-			</li>
-			<li>
-				<img class="fs-bg" alt="Green Plant" src="img/Green_Plant_by_Simon_Schlegl.jpg">
-				This is the second slide.
-			</li>
-			<li>
-				<img class="fs-bg" alt="H" src="img/H_by_Manuel_Sagredo.jpg">
-				This is the third slide.
-			</li>
-		</ol>
-		<div class="fs-prev">
-			<a href="#">BACK</a>
-		</div>
-		<div class="fs-next">
-			<a href="#">NEXT</a>
-		</div>
-		<script src="js/jquery-1.9.1.js"></script>
-		<script src="js/fs-slideshow.js"></script>
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <title>FS Slideshow</title>
+        <link rel="stylesheet" href="css/fs-slideshow.css">
+    </head>
+    <body>
+        <ol class="fs-slideshow">
+            <li>
+                <img class="fs-bg" alt="Cairn" src="img/Cairn_by_Sylvain_Naudin.jpg">
+                This is the first slide.
+            </li>
+            <li>
+                <img class="fs-bg" alt="Green Plant" src="img/Green_Plant_by_Simon_Schlegl.jpg">
+                This is the second slide.
+            </li>
+            <li>
+                <img class="fs-bg" alt="H" src="img/H_by_Manuel_Sagredo.jpg">
+                This is the third slide.
+            </li>
+        </ol>
+        <div class="fs-prev">
+            <a href="#">BACK</a>
+        </div>
+        <div class="fs-next">
+            <a href="#">NEXT</a>
+        </div>
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/fs-slideshow.js"></script>
+        <script>
+            // on document load
+            $(function() {
+                $('.fs-slideshow').fsSlideshow();
+            });
+        </script>
+    </body>
 </html>

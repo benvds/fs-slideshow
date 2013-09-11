@@ -6,6 +6,7 @@ html, body, .fs-background, .fs-slide {
 }
 
 .fs-slideshow {
+    margin: 0;
     list-style: none;
 }
     /* OPTIONAL use class for slide in slideshow for better performance */
