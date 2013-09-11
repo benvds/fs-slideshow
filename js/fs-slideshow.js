@@ -95,7 +95,7 @@
         }
     };
 
-    $.fn.fsSlideshow = function (index) {
+    $.fn.fsSlideshow = function (slideIndex) {
         return this.each(function () {
             var $this = $(this),
                 data = $this.data('fsSlideshow');
@@ -105,7 +105,7 @@
                            (data = new FsSlideshow(this)));
             }
 
-            data.setActive(typeof index == 'number' ? index : 0);
+            data.setActive(typeof slideIndex == 'number' ? slideIndex : 0);
         });
     };
 })();

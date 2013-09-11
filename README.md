@@ -57,6 +57,15 @@ todo:
 
 ```javascript
     $(function() {
-        $('.fs-slideshow).fsSlideshow();
+        $('.fs-slideshow').fsSlideshow();
     });
+```
+
+# arguments
+
+ 1. `slideIndex` _(Number)_: Show slide with index
+
+```javascript
+    // show 3rd slide
+    $('.fs-slideshow').fsSlideshow(2);
 ```
