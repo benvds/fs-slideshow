@@ -10,6 +10,7 @@ characteristics:
  * css3 transitions
  * only one slideshow per page
  * manually trigger sliding
+ * play / pause
 
 # requirements
 
@@ -51,6 +52,7 @@ characteristics:
  * initialize plugin
 
 ```javascript
+    // on document load
     $(function() {
         $('.fs-slideshow').fsSlideshow();
     });
