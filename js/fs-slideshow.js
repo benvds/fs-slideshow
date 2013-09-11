@@ -6,6 +6,7 @@
         backgroundClass = 'fs-background',
         slideClass = 'fs-slide',
         activeClass = 'fs-active',
+        defaultTimeout = 5000,
 
         // constructor
         FsSlideshow = function (element) {
@@ -92,6 +93,18 @@
             this.$contents.removeClass(activeClass);
             this.$backgrounds.eq(index).addClass(activeClass);
             this.$contents.eq(index).addClass(activeClass);
+        },
+
+        'play': function (timeout) {
+            var that = this;
+            that.showNext();
+            that.intervalId = window.setInterval(function() {
+                that.showNext();
+            }, timeout || defaultTimeout);
+        },
+
+        'pause': function () {
+            window.clearInterval(this.intervalId);
         }
     };
 
@@ -99,7 +112,9 @@
         var args = Array.prototype.slice.call(arguments),
             commands = {
                 'next': 'showNext',
-                'prev': 'showPrev'
+                'prev': 'showPrev',
+                'play': 'play',
+                'pause': 'pause'
             };
 
         return this.each(function () {
@@ -118,9 +133,8 @@
                 // use slide index if given
                 data.setActive(args[0]);
             } else if (typeof args[0] === 'string') {
-                data[commands[args[0]]]();
+                data[commands[args[0]]](args[1]);
             }
-
         });
     };
 })();

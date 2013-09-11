@@ -11,11 +11,6 @@ characteristics:
  * only one slideshow per page
  * manually trigger sliding
 
-todo:
-
- * next, prev
- * play, pause
-
 # requirements
 
   * jquery
@@ -80,4 +75,17 @@ todo:
 
 ```javascript
     $('.fs-slideshow').fsSlideshow('prev');
+```
+
+ 4. `play [, timeout]` _(String, Number)_: Show next slide with an interval of `timeout` (default 5000ms)
+
+```javascript
+    $('.fs-slideshow').fsSlideshow('play');
+    $('.fs-slideshow').fsSlideshow('play', 8000);
+```
+
+ 5. `pause` _(String)_: Pause playback
+
+```javascript
+    $('.fs-slideshow').fsSlideshow('pause');
 ```
