@@ -2,8 +2,7 @@
 
     'use strict';
 
-    var sourceSelector = '.fs-slideshow',
-        backgroundImageClass = 'fs-bg',
+    var backgroundImageClass = 'fs-bg',
         backgroundClass = 'fs-background',
         slideClass = 'fs-slide',
         activeClass = 'fs-active',
@@ -109,10 +108,4 @@
             data.setActive(typeof index == 'number' ? index : 0);
         });
     };
-
-    // document load
-    $(function() {
-        // init slide show
-        $(sourceSelector).fsSlideshow();
-    });
 })();
