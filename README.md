@@ -13,8 +13,8 @@ characteristics:
 
 todo:
 
- * start at index
- * shallow controls: next, prev, play, pause
+ * next, prev
+ * play, pause
 
 # requirements
 
@@ -68,4 +68,16 @@ todo:
 ```javascript
     // show 3rd slide
     $('.fs-slideshow').fsSlideshow(2);
+```
+
+ 2. `next` _(String)_: Show next slide
+
+```javascript
+    $('.fs-slideshow').fsSlideshow('next');
+```
+
+ 3. `prev` _(String)_: Show previous slide
+
+```javascript
+    $('.fs-slideshow').fsSlideshow('prev');
 ```

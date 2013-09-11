@@ -95,7 +95,13 @@
         }
     };
 
-    $.fn.fsSlideshow = function (slideIndex) {
+    $.fn.fsSlideshow = function () {
+        var args = Array.prototype.slice.call(arguments),
+            commands = {
+                'next': 'showNext',
+                'prev': 'showPrev'
+            };
+
         return this.each(function () {
             var $this = $(this),
                 data = $this.data('fsSlideshow');
@@ -105,7 +111,16 @@
                            (data = new FsSlideshow(this)));
             }
 
-            data.setActive(typeof slideIndex == 'number' ? slideIndex : 0);
+            if (!args.length) {
+                // default to first slide
+                data.setActive(0);
+            } else if (typeof args[0] === 'number') {
+                // use slide index if given
+                data.setActive(args[0]);
+            } else if (typeof args[0] === 'string') {
+                data[commands[args[0]]]();
+            }
+
         });
     };
 })();
