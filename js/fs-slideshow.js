@@ -78,8 +78,8 @@
 
         // handle button clicks
         'initButtons': function (index) {
-            $('.fs-prev').on('click', $.proxy(this.showPrev, this));
-            $('.fs-next').on('click', $.proxy(this.showNext, this));
+            $('.fs-prev').on('click', $.proxy(this.prev, this));
+            $('.fs-next').on('click', $.proxy(this.next, this));
         },
 
         // index of the current active slide
@@ -97,6 +97,16 @@
             return this.$backgrounds.length === index + 1;
         },
 
+        'prev': function () {
+            if (typeof this.intervalId == 'undefined') {
+                this.showPrev();
+            } else {
+                this.pause();
+                this.showPrev();
+                this.play();
+            }
+        },
+
         'showPrev': function () {
                 // cache current index
             var curIndex = this.curIndex(),
@@ -105,6 +115,16 @@
                     this.$backgrounds.length - 1 : curIndex - 1;
 
             this.setActive(nextIndex);
+        },
+
+        'next': function () {
+            if (typeof this.intervalId == 'undefined') {
+                this.showNext();
+            } else {
+                this.pause();
+                this.showNext();
+                this.play();
+            }
         },
 
         'showNext': function () {
@@ -125,7 +145,6 @@
 
         'play': function (timeout) {
             var that = this;
-            that.showNext();
             that.intervalId = window.setInterval(function() {
                 that.showNext();
             }, timeout || defaultTimeout);
@@ -133,14 +152,16 @@
 
         'pause': function () {
             window.clearInterval(this.intervalId);
+            this.intervalId = undefined;
+            console.log('timer cleared!', this.intervalId);
         }
     };
 
     $.fn.fsSlideshow = function () {
         var args = Array.prototype.slice.call(arguments),
             commands = {
-                'next': 'showNext',
-                'prev': 'showPrev',
+                'next': 'next',
+                'prev': 'prev',
                 'play': 'play',
                 'pause': 'pause'
             };
