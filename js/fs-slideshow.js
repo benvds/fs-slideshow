@@ -97,14 +97,19 @@
             return this.$backgrounds.length === index + 1;
         },
 
-        'prev': function () {
+        // reset timeout when slideshow is playing on changing slides
+        'changeSlide': function (showFn) {
             if (typeof this.intervalId == 'undefined') {
-                this.showPrev();
+                this[showFn]();
             } else {
                 this.pause();
-                this.showPrev();
+                this[showFn]();
                 this.play();
             }
+        },
+
+        'prev': function () {
+            this.changeSlide('showPrev');
         },
 
         'showPrev': function () {
@@ -118,13 +123,7 @@
         },
 
         'next': function () {
-            if (typeof this.intervalId == 'undefined') {
-                this.showNext();
-            } else {
-                this.pause();
-                this.showNext();
-                this.play();
-            }
+            this.changeSlide('showNext');
         },
 
         'showNext': function () {
@@ -158,13 +157,7 @@
     };
 
     $.fn.fsSlideshow = function () {
-        var args = Array.prototype.slice.call(arguments),
-            commands = {
-                'next': 'next',
-                'prev': 'prev',
-                'play': 'play',
-                'pause': 'pause'
-            };
+        var args = Array.prototype.slice.call(arguments);
 
         return this.each(function () {
             var $this = $(this),
@@ -182,7 +175,8 @@
                 // use slide index if given
                 data.setActive(args[0]);
             } else if (typeof args[0] === 'string') {
-                data[commands[args[0]]](args[1]);
+                // call method with given name, one argument is passed
+                data[args[0]](args[1]);
             }
         });
     };
