@@ -6,10 +6,10 @@
         backgroundClass = 'fs-background',
         slideClass = 'fs-slide',
         activeClass = 'fs-active',
-        defaultTimeout = 5000,
         defaults = {
             'shuffle': false,
-            'autoPlay': true
+            'autoPlay': true,
+            'timeout': 5000
         },
 
         shuffle = function (original) {
@@ -146,13 +146,12 @@
             var that = this;
             that.intervalId = window.setInterval(function() {
                 that.showNext();
-            }, timeout || defaultTimeout);
+            }, timeout || this.options.timeout);
         },
 
         'pause': function () {
             window.clearInterval(this.intervalId);
             this.intervalId = undefined;
-            console.log('timer cleared!', this.intervalId);
         }
     };
 
