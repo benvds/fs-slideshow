@@ -12,6 +12,10 @@ characteristics:
  * manually trigger sliding
  * play / pause
 
+# TODO
+
+ * firefox, ie10
+
 # requirements
 
   * jquery

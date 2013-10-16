@@ -1,0 +1,8 @@
+# Ignore hidden folders
+.*/
+
+*.min.css
+#*.min.js
+.sass-cache/*
+node_modules
+cli/_cache/

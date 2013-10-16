@@ -1,0 +1,15 @@
+{
+  "name": "fs-slideshow",
+  "version": "0.1.0",
+  "description": "FullScreen Slideshow",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "connect": "~2.7.8"
+  }
+}
