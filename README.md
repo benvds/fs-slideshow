@@ -14,6 +14,8 @@ characteristics:
 
 # TODO
 
+ * move more variable to options
+ * add loading icon
  * firefox, ie10
 
 # requirements
@@ -64,33 +66,42 @@ characteristics:
 
 # arguments
 
- 1. `slideIndex` _(Number)_: Show slide with index
+ 1. `options` _(Object)_: Initialize slideshow with given options
+
+```javascript
+    $('.fs-slideshow').fsSlideshow({
+        shuffle: true,
+        autoPlay: true
+    });
+```
+
+ 2. `slideIndex` _(Number)_: Show slide with index
 
 ```javascript
     // show 3rd slide
     $('.fs-slideshow').fsSlideshow(2);
 ```
 
- 2. `next` _(String)_: Show next slide
+ 3. `next` _(String)_: Show next slide
 
 ```javascript
     $('.fs-slideshow').fsSlideshow('next');
 ```
 
- 3. `prev` _(String)_: Show previous slide
+ 4. `prev` _(String)_: Show previous slide
 
 ```javascript
     $('.fs-slideshow').fsSlideshow('prev');
 ```
 
- 4. `play [, timeout]` _(String, Number)_: Show next slide with an interval of `timeout` (default 5000ms)
+ 5. `play [, timeout]` _(String, Number)_: Show next slide with an interval of `timeout` (default 5000ms)
 
 ```javascript
     $('.fs-slideshow').fsSlideshow('play');
     $('.fs-slideshow').fsSlideshow('play', 8000);
 ```
 
- 5. `pause` _(String)_: Pause playback
+ 6. `pause` _(String)_: Pause playback
 
 ```javascript
     $('.fs-slideshow').fsSlideshow('pause');

@@ -7,11 +7,24 @@
         slideClass = 'fs-slide',
         activeClass = 'fs-active',
         defaultTimeout = 5000,
+        defaults = {
+            'shuffle': false,
+            'autoPlay': true
+        },
+
+        shuffle = function (original) {
+            var slides = original.sort(function() {
+                    return 0.5 - Math.random()
+                });
+
+            return slides;
+        },
 
         // constructor
-        FsSlideshow = function (element) {
+        FsSlideshow = function (element, options) {
             // source element for the slideshow
             this.$element = $(element);
+            this.options = $.extend({}, defaults, options);
             // background element holding the slides
             this.$background = $('<div />').
                 addClass(backgroundClass).
@@ -28,7 +41,7 @@
     FsSlideshow.prototype = {
         // create slides, add to background
         'initSlides': function () {
-            var $this, $backgroundImg, src, slide, that = this;
+            var $this, $backgroundImg, src, slides = [], slide, that = this;
 
             this.$contents.each(function () {
                 $this = $(this);
@@ -41,11 +54,26 @@
                 // add slide and set the background image
                 slide = $('<div />').
                     addClass(slideClass).
-                    css('backgroundImage', 'url(' + src + ')').
-                    appendTo(that.$background);
+                    css('backgroundImage', 'url(' + src + ')');
+                    // appendTo(that.$background);
 
-                that.$backgrounds = that.$backgrounds.add(slide);
+                // that.$backgrounds = that.$backgrounds.add(slide);
+                slides.push(slide);
             });
+
+            if (this.options.shuffle) {
+                shuffle(slides);
+            }
+
+            for (var i = 0, l = slides.length; i < l; i ++) {
+                var $s = slides[i];
+                $s.appendTo(this.$background);
+                that.$backgrounds = that.$backgrounds.add($s);
+            }
+
+            if (this.options.autoPlay) {
+                this.play();
+            }
         },
 
         // handle button clicks
@@ -123,10 +151,10 @@
 
             if (!data) {
                 $this.data('fsSlideshow',
-                           (data = new FsSlideshow(this)));
+                           (data = new FsSlideshow(this, args[0])));
             }
 
-            if (!args.length) {
+            if (!args.length || typeof args[0] === 'object') {
                 // default to first slide
                 data.setActive(0);
             } else if (typeof args[0] === 'number') {
