@@ -9,15 +9,15 @@
         defaults = {
             'shuffle': false,
             'autoPlay': true,
-            'timeout': 5000
+            'timeout': 5000,
+            'startIndex': 0
         },
 
+        // clone and shuffle an array
         shuffle = function (original) {
-            var slides = original.sort(function() {
-                    return 0.5 - Math.random()
-                });
-
-            return slides;
+            return original.slice().sort(function() {
+                return 0.5 - Math.random();
+            });
         },
 
         // constructor
@@ -34,14 +34,19 @@
             // cache content for manipulation
             this.$contents = this.$element.children();
 
-            this.initSlides();
+            this.createSlides();
+            this.setSlidesOrder();
             this.initButtons();
+
+            if (this.options.autoPlay) {
+                this.play();
+            }
         };
 
     FsSlideshow.prototype = {
         // create slides, add to background
-        'initSlides': function () {
-            var $this, $backgroundImg, src, slides = [], slide, that = this;
+        'createSlides': function () {
+            var $this, $backgroundImg, src, $slide, that = this;
 
             this.$contents.each(function () {
                 $this = $(this);
@@ -52,27 +57,30 @@
                 src = $backgroundImg.attr('src');
 
                 // add slide and set the background image
-                slide = $('<div />').
+                $slide = $('<div />').
                     addClass(slideClass).
                     css('backgroundImage', 'url(' + src + ')');
-                    // appendTo(that.$background);
 
-                // that.$backgrounds = that.$backgrounds.add(slide);
-                slides.push(slide);
+                $slide.appendTo(that.$background);
+                that.$backgrounds = that.$backgrounds.add($slide);
             });
+        },
+
+        // handle button clicks
+        'setSlidesOrder': function () {
+            var index = -1, length = this.$backgrounds.length;
+
+            // order of the slides
+            this.orderIndex = this.options.startIndex;
+            this.slidesOrder = [];
+
+            // add slide indexes in order
+            while (++index < length) {
+                this.slidesOrder.push(index);
+            }
 
             if (this.options.shuffle) {
-                shuffle(slides);
-            }
-
-            for (var i = 0, l = slides.length; i < l; i ++) {
-                var $s = slides[i];
-                $s.appendTo(this.$background);
-                that.$backgrounds = that.$backgrounds.add($s);
-            }
-
-            if (this.options.autoPlay) {
-                this.play();
+                this.slidesOrder = shuffle(this.slidesOrder);
             }
         },
 
@@ -82,22 +90,29 @@
             $('.fs-next').on('click', $.proxy(this.next, this));
         },
 
-        // index of the current active slide
-        'curIndex': function() {
-            return this.$background.find('.' + activeClass).index();
+        // index of the slide for order index or the current order index
+        'slideIndex': function(orderIndex) {
+            return this.slidesOrder[orderIndex || this.orderIndex];
         },
 
-        // equals given index that of the last slide
-        'isFirstSlideIndex': function (index) {
-            return index === 0;
+        'decreaseOrderIndex': function () {
+            if (this.orderIndex > 0) {
+                this.orderIndex--;
+            } else {
+                this.orderIndex = this.slidesOrder.length - 1;
+            }
         },
 
-        // equals given index that of the last slide
-        'isLastSlideIndex': function (index) {
-            return this.$backgrounds.length === index + 1;
+        'increaseOrderIndex': function () {
+            if (this.orderIndex === this.slidesOrder.length - 1) {
+                this.orderIndex = 0;
+            } else {
+                this.orderIndex++;
+            }
         },
 
-        // reset timeout when slideshow is playing on changing slides
+        // reset timeout when slideshow is playing on changing slides and call
+        // the show function
         'changeSlide': function (showFn) {
             if (typeof this.intervalId == 'undefined') {
                 this[showFn]();
@@ -113,13 +128,8 @@
         },
 
         'showPrev': function () {
-                // cache current index
-            var curIndex = this.curIndex(),
-                // use last index if current index is the first
-                nextIndex = this.isFirstSlideIndex(curIndex) ?
-                    this.$backgrounds.length - 1 : curIndex - 1;
-
-            this.setActive(nextIndex);
+            this.decreaseOrderIndex();
+            this.setActive();
         },
 
         'next': function () {
@@ -127,19 +137,15 @@
         },
 
         'showNext': function () {
-                // cache current index
-            var curIndex = this.curIndex(),
-                // use first index if current index is the last
-                nextIndex = this.isLastSlideIndex(curIndex) ? 0 : curIndex + 1;
-
-            this.setActive(nextIndex);
+            this.increaseOrderIndex();
+            this.setActive();
         },
 
         'setActive': function (index) {
             this.$backgrounds.removeClass(activeClass);
             this.$contents.removeClass(activeClass);
-            this.$backgrounds.eq(index).addClass(activeClass);
-            this.$contents.eq(index).addClass(activeClass);
+            this.$backgrounds.eq(this.slideIndex(index)).addClass(activeClass);
+            this.$contents.eq(this.slideIndex(index)).addClass(activeClass);
         },
 
         'play': function (timeout) {

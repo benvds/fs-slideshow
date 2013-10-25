@@ -12,12 +12,9 @@ characteristics:
  * manually trigger sliding
  * play / pause
 
-# BUGS
-
- * content doesn't get shuffled with backgrounds
-
 # TODO
 
+ * add pause/play to default initialized buttons
  * move more variables to options
  * add loading icon
  * firefox, ie10
